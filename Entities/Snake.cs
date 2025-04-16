@@ -62,13 +62,7 @@ namespace SnakeGameGPT.Entities
             _segments.RemoveLast();
         }
 
-        public void Grow()
-        {
-            for (int i = 0; i < 500; i++)
-            {
-                _segments.AddLast(_segments.Last!.Value);
-            }
-        }
+        public void Grow() =>_segments.AddLast(_segments.Last!.Value);
 
         public void TrimOutside(int gridWidth, int gridHeight)
         {
