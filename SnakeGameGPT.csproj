@@ -6,10 +6,21 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resouces\Images\snake.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <ApplicationDefinition Include="AppConfig\\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resouces\Images\snake.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resouces\Images\snake.ico" />
   </ItemGroup>
 
 </Project>
