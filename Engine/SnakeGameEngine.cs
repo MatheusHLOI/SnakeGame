@@ -51,6 +51,13 @@ namespace SnakeGameGPT.Engine
         private void Update()
         {
             _snake.Move();
+
+            if (_snake.HasSelfCollision())
+            {
+                _timer.Stop();
+                _view.OnGameOver();
+                return;
+            }
             if (_snake.Head.Equals(_foodPosition))
             {
                 _snake.Grow();

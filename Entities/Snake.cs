@@ -73,5 +73,9 @@ namespace SnakeGameGPT.Entities
                 _segments.AddLast(s);
         }
 
+        public bool HasSelfCollision()
+        {
+            return _segments.Skip(1).Any(segment => segment.Equals(Head));
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace SnakeGameGPT.Interfaces
         void Clear();
         void OnScoreChanged(int score);
         void OnGameStarted();
-
+        void OnGameOver();
 
     }
 }

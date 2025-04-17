@@ -85,6 +85,26 @@ namespace SnakeGameGPT.Views.WPF
             ScoreText.Text = "Pontos: 0";
             _score = 0;
         }
+
+        public void OnGameOver()
+        {
+            ScoreText.Text = $"Game Over! Pontos: {_score}";
+            RestartButton.Visibility = Visibility.Visible;
+        }
+
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            ScoreText.Text = "Use as setas para começar";
+            RestartButton.Visibility = Visibility.Collapsed;
+
+            _score = 0;
+
+            _rows = (int)(GameCanvas.ActualHeight / _cellSize);
+            _cols = (int)(GameCanvas.ActualWidth / _cellSize);
+
+            _engine = new SnakeGameEngine(this, _rows, _cols, TimeSpan.FromMilliseconds(200));
+        }
+
     }
 }
 
