@@ -11,13 +11,20 @@ namespace SnakeGameGPT.Engine
     public class SnakeGameEngine
     {
         private readonly IGameView _view;
-        private readonly DispatcherTimer _timer;
         private readonly Snake _snake;
         private Position _foodPosition;
-        private int _score;
         private int _rows;
         private int _cols;
         private bool _startedByPlayer = false;
+
+        private readonly DispatcherTimer _timer;
+        private TimeSpan _interval;
+        private int _score = 0;
+
+        // Configuração da dificuldade
+        private const int InitialInterval = 500;
+        private const int MinInterval = 20;
+
 
 
         public SnakeGameEngine(IGameView view, int rows, int cols, TimeSpan interval)
@@ -28,7 +35,8 @@ namespace SnakeGameGPT.Engine
             _snake = new Snake(new Position(cols / 2, rows / 2), cols, rows);
             PlaceFood();
 
-            _timer = new DispatcherTimer { Interval = interval };
+            _interval = TimeSpan.FromMilliseconds(InitialInterval);
+            _timer = new DispatcherTimer { Interval = _interval };
             _timer.Tick += (s, e) => Update();
         }
 
@@ -62,7 +70,8 @@ namespace SnakeGameGPT.Engine
             {
                 _snake.Grow();
                 _score++;
-                _view.OnScoreChanged(_score); // <- avisa a view
+                _view.OnScoreChanged(_score);
+                AdjustDifficulty();
                 PlaceFood();
             }
 
@@ -100,6 +109,26 @@ namespace SnakeGameGPT.Engine
             _snake.TrimOutside(_cols, _rows);
         }
 
+        private void AdjustDifficulty()
+        {
+            int currentMs = (int)_interval.TotalMilliseconds;
 
+            if (_score % 1 == 0)
+            {
+                if (currentMs > 100)
+                    currentMs -= 100;
+                else if (currentMs > 50)
+                    currentMs -= 10;
+                else if (currentMs > MinInterval)
+                    currentMs -= 1;
+            }
+
+            // Atualiza intervalo se mudou
+            if (currentMs != (int)_interval.TotalMilliseconds)
+            {
+                _interval = TimeSpan.FromMilliseconds(currentMs);
+                _timer.Interval = _interval;
+            }
+        }
     }
 }

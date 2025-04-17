@@ -16,6 +16,7 @@ namespace SnakeGameGPT.Views.WPF
         private int _rows;
         private int _cols;
         private int _score = 0;
+        private const int initialTime = 500; // Tempo inicial em milissegundos
 
 
         public MainWindow()
@@ -35,7 +36,7 @@ namespace SnakeGameGPT.Views.WPF
             // Cria nova engine se ainda não existir
             if (_engine == null)
             {
-                _engine = new SnakeGameEngine(this, _rows, _cols, TimeSpan.FromMilliseconds(100));
+                _engine = new SnakeGameEngine(this, _rows, _cols, TimeSpan.FromMilliseconds(initialTime));
             }
             else
             {
@@ -102,7 +103,7 @@ namespace SnakeGameGPT.Views.WPF
             _rows = (int)(GameCanvas.ActualHeight / _cellSize);
             _cols = (int)(GameCanvas.ActualWidth / _cellSize);
 
-            _engine = new SnakeGameEngine(this, _rows, _cols, TimeSpan.FromMilliseconds(200));
+            _engine = new SnakeGameEngine(this, _rows, _cols, TimeSpan.FromMilliseconds(initialTime));
         }
 
     }
